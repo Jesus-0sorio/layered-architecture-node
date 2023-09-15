@@ -25,7 +25,6 @@ app.use((err, _, res, next) => {
     const payload = error.output.payload;
     return res.status(statusCode).json(payload);
   }
-
   return next;
 });
 
@@ -37,6 +36,6 @@ app.use((err, _, res, next) => {
   }
 })();
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 5001, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
