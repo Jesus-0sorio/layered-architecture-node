@@ -1,7 +1,7 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import filtersRouter from './src/handlers/filters/index.js';
+import filtersRouter from './src/handlers/index.js';
 import { startConnection } from './src/mongo/index.js';
 import Boom from '@hapi/boom';
 
