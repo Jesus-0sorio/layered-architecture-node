@@ -5,14 +5,7 @@ import Boom from '@hapi/boom';
 const imagesType = ['image/png'];
 
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: 'uploads',
-    filename: (_, file, cb) => {
-      const fileExtension = extname(file.originalname);
-      const fileName = file.originalname.split(fileExtension)[0];
-      cb(null, `${fileName}-${Date.now()}${fileExtension}`);
-    },
-  }),
+  storage: multer.memoryStorage(),
   fileFilter: (_, file, cb) => {
     if (imagesType.includes(file.mimetype)) {
       cb(null, true);

@@ -4,6 +4,9 @@ import { StatusCodes } from 'http-status-codes';
 
 const applyFiltersHandler = async (req, res, next) => {
   try {
+
+    console.log(req.files);
+
     const payload = req.body;
     const response = await applyFilters(payload);
     return res.status(StatusCodes.OK).json(response);
