@@ -13,7 +13,7 @@ const ProcessSchema = new Schema(
       ],
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const ProcessModel = model('images', ProcessSchema);

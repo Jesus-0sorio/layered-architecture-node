@@ -1,5 +1,4 @@
 import multer from 'multer';
-import { extname } from 'path';
 import Boom from '@hapi/boom';
 
 const imagesType = ['image/png'];
@@ -11,7 +10,7 @@ const upload = multer({
       cb(null, true);
     } else {
       const errorMessage = `Only ${imagesType.join(
-        ', '
+        ', ',
       )} mimetypes are allowed`;
       const error = Boom.badData(errorMessage);
       cb(error);

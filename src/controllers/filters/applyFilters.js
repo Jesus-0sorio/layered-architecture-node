@@ -1,13 +1,13 @@
-import Process from '../../models/Process.js';
-import Joi from 'joi';
 import Boom from '@hapi/boom';
+import Joi from 'joi';
+import Process from '../../models/Process.js';
 import { FILTERS } from '../../commons/constants.js';
 
 const PayloadValidation = Joi.object({
   filters: Joi.array()
     .min(1)
     .items(
-      Joi.string().valid(FILTERS.NEGATIVE, FILTERS.GREYSCALE, FILTERS.BLUR)
+      Joi.string().valid(FILTERS.NEGATIVE, FILTERS.GREYSCALE, FILTERS.BLUR),
     ),
   files: Joi.array().required(),
 });

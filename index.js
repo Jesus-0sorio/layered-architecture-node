@@ -1,9 +1,9 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import filtersRouter from './src/handlers/filters/index.js';
-import { startConnection } from './src/mongo/index.js';
 import Boom from '@hapi/boom';
+import filtersRouter from './src/handlers/filters/index.js';
+import startConnection from './src/mongo/index.js';
 
 dotenv.config();
 
@@ -20,9 +20,9 @@ app.use('/images', filtersRouter);
 
 app.use((err, _, res, next) => {
   if (err) {
-    let error = Boom.isBoom(err) ? err : Boom.internal(err);
-    const statusCode = error.output.statusCode;
-    const payload = error.output.payload;
+    const error = Boom.isBoom(err) ? err : Boom.internal(err);
+    const { statusCode } = error.output;
+    const { payload } = error.output;
     return res.status(statusCode).json(payload);
   }
   return next;
