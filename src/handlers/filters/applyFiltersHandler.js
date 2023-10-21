@@ -7,7 +7,6 @@ const applyFiltersHandler = async (req, res, next) => {
     if (!filters) {
       throw Boom.badData('Filters are required');
     }
-
     const response = await req.container
       .processService.applyFilters({
         filters,

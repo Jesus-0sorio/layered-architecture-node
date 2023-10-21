@@ -2,7 +2,6 @@ import Boom from '@hapi/boom';
 import {
   S3Client, PutObjectCommand, HeadBucketCommand, CreateBucketCommand,
 } from '@aws-sdk/client-s3';
-import { v4 } from 'uuid';
 import { BUCKET_NAME } from '../commons/constants.js';
 
 class MinioService {
@@ -50,19 +49,12 @@ class MinioService {
       }
 
       const { originalname, buffer } = image;
-
-      const originalNameParts = originalname.split('.');
-      if (originalNameParts.length !== 2) {
-        throw Boom.badRequest('Invalid image name');
-      }
-      const extension = originalNameParts[1];
-      const fileName = `${v4()}.${extension}`;
       await this.conn.send(new PutObjectCommand({
         Bucket: BUCKET_NAME,
-        Key: fileName,
+        Key: originalname,
         Body: buffer,
       }));
-      return fileName;
+      return originalname;
     } catch (e) {
       throw Boom.isBoom(e) ? e : Boom.internal('error saving image', e);
     }

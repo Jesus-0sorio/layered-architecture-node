@@ -27,8 +27,18 @@ class ProcessService {
     } catch (e) {
       throw Boom.badData(e.message, { e });
     }
-    const newProcess = await this.processRepository.save(payload);
-    const { images } = payload;
+    const { images, filters } = payload;
+    const newData = {
+      filters,
+      images: images.map((image) => ({
+        imageUrl: image.originalname,
+        filters: filters.map((filter) => ({
+          name: filter,
+          status: 'in-progress',
+        })),
+      })),
+    };
+    const newProcess = await this.processRepository.save(newData);
 
     const imgsPromises = images.map(async (image) => {
       await this.minioService.saveImage(image);
@@ -37,6 +47,14 @@ class ProcessService {
     await Promise.all(imgsPromises);
 
     return newProcess;
+  }
+
+  async getProcessById(id) {
+    const process = await this.processRepository.getById(id);
+    if (!process) {
+      throw Boom.notFound(`Process with id ${id} not found`);
+    }
+    return process;
   }
 }
 
