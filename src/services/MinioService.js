@@ -36,18 +36,6 @@ class MinioService {
         }
       }
 
-      if (!image) {
-        throw Boom.badRequest('Image is required');
-      }
-
-      if (!image.originalname) {
-        throw Boom.badRequest('Image originalname is required');
-      }
-
-      if (!image.buffer) {
-        throw Boom.badRequest('Image buffer is required');
-      }
-
       const { originalname, buffer } = image;
       await this.conn.send(new PutObjectCommand({
         Bucket: BUCKET_NAME,

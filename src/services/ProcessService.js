@@ -45,7 +45,6 @@ class ProcessService {
     });
 
     await Promise.all(imgsPromises);
-
     return newProcess;
   }
 

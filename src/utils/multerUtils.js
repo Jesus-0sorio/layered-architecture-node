@@ -9,9 +9,6 @@ const upload = multer({
   fileFilter: (_, file, cb) => {
     if (imagesType.includes(file.mimetype)) {
       const originalNameParts = file.originalname.split('.');
-      if (originalNameParts.length !== 2) {
-        throw Boom.badRequest('Invalid image name');
-      }
       const extension = originalNameParts[1];
       const fileName = `${v4()}.${extension}`;
       // eslint-disable-next-line no-param-reassign
@@ -22,7 +19,7 @@ const upload = multer({
         ', ',
       )} mime-types are allowed`;
       const error = Boom.badData(errorMessage);
-      cb(error);
+      cb(error, false);
     }
   },
   limits: {
