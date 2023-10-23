@@ -86,6 +86,36 @@ describe('Test app Express server', () => {
     expect(response.status).toBe(422);
   });
 
+  test('GET /images/:id should return 200 status', async () => {
+    const response = await supertest(app).get('/images/65344f1d9ffa4e4dbd92a4fd');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('filters');
+    expect(response.body).toHaveProperty('_id');
+    expect(response.body).toHaveProperty('createdAt');
+    expect(response.body).toHaveProperty('updatedAt');
+  });
+
+  test('GET /images/:id should return 404 status', async () => {
+    const response = await supertest(app).get('/images/65344f1d9ffa4e4dbd92a4f0');
+
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe('Process with id 65344f1d9ffa4e4dbd92a4f0 not found');
+  });
+
+  test('GET /images/:id should return 422 status', async () => {
+    const response = await supertest(app).get('/images/1');
+
+    expect(response.status).toBe(422);
+    expect(response.body.message).toBe('Invalid id: 1');
+  });
+
+  test('GET /images/:id should return 500 status', async () => {
+    closeConnection();
+    const response = await supertest(app).get('/images/65344f1d9ffa4e4dbd92a4fd');
+
+    expect(response.status).toBe(500);
+  });
   test('POST /images should return 500 status', async () => {
     closeConnection();
     const response = await supertest(app).post('/images')
