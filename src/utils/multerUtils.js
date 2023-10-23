@@ -6,6 +6,9 @@ const imagesType = ['image/png'];
 
 const upload = multer({
   storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 52428800,
+  },
   fileFilter: (_, file, cb) => {
     if (imagesType.includes(file.mimetype)) {
       const originalNameParts = file.originalname.split('.');
@@ -21,9 +24,6 @@ const upload = multer({
       const error = Boom.badData(errorMessage);
       cb(error, false);
     }
-  },
-  limits: {
-    fileSize: 31457280,
   },
 });
 

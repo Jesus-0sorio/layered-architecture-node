@@ -97,10 +97,10 @@ describe('Test app Express server', () => {
   });
 
   test('GET /images/:id should return 404 status', async () => {
-    const response = await supertest(app).get('/images/65344f1d9ffa4e4dbd92a4f0');
+    const response = await supertest(app).get('/images/65344f1d9ffa4e4dbd92a410');
 
     expect(response.status).toBe(404);
-    expect(response.body.message).toBe('Process with id 65344f1d9ffa4e4dbd92a4f0 not found');
+    expect(response.body.message).toBe('Process with id 65344f1d9ffa4e4dbd92a410 not found');
   });
 
   test('GET /images/:id should return 422 status', async () => {
