@@ -28,6 +28,13 @@ class ProcessService {
       throw Boom.badData(e.message, { e });
     }
     const { images, filters } = payload;
+
+    const imagesSize = images.reduce((acc, image) => acc + image.size, 0);
+
+    if (imagesSize > 50 * 1024 * 1024) {
+      throw Boom.badData('Images size exceeds 50MB');
+    }
+
     const newData = {
       filters,
       images: images.map((image) => ({
