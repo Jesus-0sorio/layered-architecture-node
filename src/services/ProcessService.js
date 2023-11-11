@@ -52,6 +52,26 @@ class ProcessService {
     });
 
     await Promise.all(imgsPromises);
+
+    const newImages = {
+      id: newProcess._id,
+      images: newProcess.images.map((image) => ({
+        id: image._id,
+        filters: image.filters.map((filter) => ({
+          id: filter._id,
+          name: filter.name,
+        })),
+        originalname: image.originalname,
+        buffer: images.find((img) => img.originalname === image.originalname).buffer,
+      })),
+    };
+
+    new ApplyFiltersService({
+      processRepository: this.processRepository,
+      document: newImages,
+      minioService: this.minioService,
+    }).applyFilters(newImages);
+
     return newProcess;
   }
 

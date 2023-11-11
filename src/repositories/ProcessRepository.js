@@ -14,6 +14,10 @@ class ProcessRepository {
     const newProcess = await ProcessModel.findById(id);
     return newProcess;
   }
+
+  async updateOne(id, data, option = { new: true }) {
+    await ProcessModel.findOneAndUpdate(id, data, option);
+  }
 }
 
 export default ProcessRepository;

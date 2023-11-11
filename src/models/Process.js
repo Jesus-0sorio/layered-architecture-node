@@ -11,6 +11,7 @@ const FiltersSchema = new Schema(
       type: String,
       enum: ['in-progress', 'completed', 'failed'],
       default: 'in-progress',
+      imgUrl: { type: String, required: false },
     },
   },
   { _id: true },
@@ -36,6 +37,10 @@ const ProcessSchema = new Schema(
           },
           filters: {
             type: [FiltersSchema],
+          },
+          originalname: {
+            type: String,
+            required: true,
           },
         },
       ],
