@@ -9,7 +9,7 @@ class Observer {
       {
         $set: {
           'images.$[image].filters.$[filter].status': 'completed',
-          'images.$[image].filters.$[filter].imgUrl': 'IMAGE_URL',
+          'images.$[image].filters.$[filter].imgUrl': imgUrl,
         },
       },
       {

@@ -12,9 +12,7 @@ class ApplyFilter {
 
   unsubscribe(imgId, filterId) {
     if (this.subscribers[imgId]) {
-      this.subscribers[imgId] = this.subscribers[imgId].filter(
-        (id) => id !== filterId,
-      );
+      this.subscribers[imgId] = this.subscribers[imgId].filter((id) => id !== filterId);
     }
   }
 

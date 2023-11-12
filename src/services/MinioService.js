@@ -1,7 +1,8 @@
 import Boom from '@hapi/boom';
 import {
-  S3Client, PutObjectCommand, HeadBucketCommand, CreateBucketCommand,
+  S3Client, PutObjectCommand, HeadBucketCommand, CreateBucketCommand, GetObjectCommand,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { BUCKET_NAME } from '../commons/constants.js';
 
 class MinioService {
@@ -45,6 +46,19 @@ class MinioService {
       return originalname;
     } catch (e) {
       throw Boom.isBoom(e) ? e : Boom.internal('error saving image', e);
+    }
+  }
+
+  async generateSignedUrl(imageName) {
+    try {
+      const command = new GetObjectCommand({
+        Bucket: BUCKET_NAME,
+        Key: imageName,
+      });
+      const url = await getSignedUrl(this.conn, command, { expiresIn: 86400 });
+      return url;
+    } catch (e) {
+      throw Boom.isBoom(e) ? e : Boom.internal('error generating signed url', e);
     }
   }
 }

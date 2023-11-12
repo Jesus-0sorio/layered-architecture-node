@@ -13,6 +13,7 @@ const FiltersSchema = new Schema(
       default: 'in-progress',
       imgUrl: { type: String, required: false },
     },
+    imgUrl: { type: String, required: false },
   },
   { _id: true },
 );
