@@ -4,7 +4,9 @@
 ### Folders ###
 uploads
 .vscode/
+
 package-lock.json
+
 ### Node ###
 # Logs
 logs

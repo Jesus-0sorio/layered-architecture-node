@@ -30,10 +30,6 @@ class ProcessService {
     }
     const { images, filters } = payload;
 
-    if (images.length === 0) {
-      throw Boom.badData('Images are required');
-    }
-
     const imagesSize = images.reduce((acc, image) => acc + image.size, 0);
 
     if (imagesSize > 50 * 1024 * 1024) {

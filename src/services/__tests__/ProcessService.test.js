@@ -10,6 +10,7 @@ describe('ProcessService', () => {
   };
   const minioService = {
     saveImage: jest.fn(),
+    generateSignedUrl: jest.fn(),
   };
   const processService = new ProcessService({ processRepository, minioService });
 
@@ -17,8 +18,10 @@ describe('ProcessService', () => {
     const payload = {
       filters: ['negative', 'grayscale'],
       images: [
-        { originalname: 'img.png' },
-        { originalname: 'img1.png' },
+        {
+          originalname: 'img.png',
+          buffer: Buffer.from('./assets/img1.png'),
+        },
       ],
     };
 
@@ -28,19 +31,27 @@ describe('ProcessService', () => {
         {
           imageUrl: 'img.png',
           filters: [
-            { name: 'negative', status: 'in-progress' },
-            { name: 'grayscale', status: 'in-progress' },
+            {
+              name: 'negative',
+              status: 'in-progress',
+              originalname: 'img.png',
+              _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+
+            },
+            {
+              name: 'grayscale',
+              status: 'in-progress',
+              originalname: 'img.png',
+              _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+            },
           ],
-        },
-        {
-          imageUrl: 'img1.png',
-          filters: [
-            { name: 'negative', status: 'in-progress' },
-            { name: 'grayscale', status: 'in-progress' },
-          ],
+          originalname: 'img.png',
         },
       ],
+      _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+      originalname: 'img.png',
     };
+
     processRepository.save = jest.fn()
       .mockImplementationOnce(() => expectedData);
     const process = await processService.applyFilters(payload);

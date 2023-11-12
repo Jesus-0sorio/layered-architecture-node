@@ -27,5 +27,6 @@ module.exports = {
         js: 'always',
       },
     ],
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };

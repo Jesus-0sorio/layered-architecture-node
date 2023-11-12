@@ -12,7 +12,7 @@ const applyFiltersHandler = async (req, res, next) => {
         filters,
         images: req.files,
       });
-    return res.status(StatusCodes.OK).json(response);
+    return res.status(StatusCodes.CREATED).json(response);
   } catch (e) {
     return next(Boom.isBoom(e) ? e : Boom.internal(e));
   }

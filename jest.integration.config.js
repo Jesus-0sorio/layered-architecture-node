@@ -4,7 +4,7 @@ export default {
     'js',
   ],
   testMatch: [
-    '**/__tests__/**/*.js',
+    '**/__tests__/**/(*.)+(spec).js',
   ],
   collectCoverageFrom: [
     '**/app.mjs',

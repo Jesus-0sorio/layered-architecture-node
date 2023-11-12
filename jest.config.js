@@ -1,8 +1,9 @@
 export default {
   moduleFileExtensions: [
     'js',
+    'mjs',
   ],
-  testMatch: ['**/?(*.)+(test).js'],
+  testMatch: ['**/?(*.)+(test).(m)js', '**/?(*.)+(test).js'],
   verbose: true,
   coverageThreshold: {
     global: {
