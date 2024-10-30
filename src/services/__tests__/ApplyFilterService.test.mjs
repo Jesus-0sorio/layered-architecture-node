@@ -24,8 +24,10 @@ describe('ApplyFiltersService', () => {
       updateOne: jest.fn(),
     };
     minioService = {
-      saveImage: jest.fn(),
-      generateSignedUrl: jest.fn(),
+      saveImage: jest.fn().mockResolvedValue({}),
+      generateSignedUrl: jest
+        .fn()
+        .mockReturnValue('http://example.com/signed-url'),
     };
     applyFiltersService = new ApplyFiltersService({
       processRepository,
