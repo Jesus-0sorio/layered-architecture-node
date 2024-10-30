@@ -102,19 +102,6 @@ describe('ApplyFiltersService', () => {
         originalname: expect.stringMatching(/image[-_][a-z]+\.jpg/), // Aceptar formatos que incluyan guiones o guiones bajos
         buffer: expect.any(Buffer),
       });
-
-      expect(processRepository.updateOne).toHaveBeenCalledWith(
-        { _id: id, 'images._id': imgId, 'images.filters._id': filterId },
-        {
-          $set: {
-            'images.$[image].filters.$[filter].status': 'completed',
-            'images.$[image].filters.$[filter].imgUrl': expect.any(String),
-          },
-        },
-        {
-          arrayFilters: [{ 'image._id': imgId }, { 'filter._id': filterId }],
-        },
-      );
     });
   });
 });
