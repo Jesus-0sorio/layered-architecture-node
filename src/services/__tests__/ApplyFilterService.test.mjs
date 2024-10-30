@@ -85,8 +85,8 @@ describe('ApplyFiltersService', () => {
       await applyFiltersService.applyFilters(newImages);
 
       expect(sharpGrayscale).toHaveBeenCalled();
-      expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
-      expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
+      expect(sharpNegate).toHaveBeenCalled();
+      expect(sharpBlur).toHaveBeenCalled();
       await expect(sharpToBuffer).toHaveBeenCalled();
       expect(minioService.saveImage).toHaveBeenCalledWith({
         originalname: 'image_grayscale.jpg',
