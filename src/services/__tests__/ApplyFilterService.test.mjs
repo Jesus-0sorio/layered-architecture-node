@@ -29,9 +29,9 @@ describe('ApplyFiltersService', () => {
       const filterId = '789';
       const imgUrl = 'https://example.com/image.jpg';
       // Create a mock image buffer
-      const mockImageBuffer = fetch(
+      const mockImageBuffer = await fetch(
         'https://fastly.picsum.photos/id/575/200/200.jpg?hmac=u8uMtAWK-6Ug08Vo4nf84xQLlwJqyrXpfzsU9a3YpCY',
-      ).then((res) => res);
+      ).then((res) => res.buffer());
 
       // Use the mock image buffer in your test
       const newImages = {
