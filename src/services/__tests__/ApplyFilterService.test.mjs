@@ -3,6 +3,8 @@ import {
   describe, test, expect, jest,
   beforeEach,
 } from '@jest/globals';
+import fs from 'fs';
+import path from 'path';
 import ApplyFiltersService from '../ApplyFilterService.js';
 import Observer from '../ApplyFilter/Observer.js';
 import ApplyFilter from '../ApplyFilter/ApplyFilter.js';
@@ -29,9 +31,8 @@ describe('ApplyFiltersService', () => {
       const filterId = '789';
       const imgUrl = 'https://example.com/image.jpg';
       // Create a mock image buffer
-      const mockImageBuffer = await fetch(
-        'https://fastly.picsum.photos/id/575/200/200.jpg?hmac=u8uMtAWK-6Ug08Vo4nf84xQLlwJqyrXpfzsU9a3YpCY',
-      ).then((res) => Buffer.from(res));
+      const imagePath = path.join(__dirname, 'assets', 'img1.png'); // Ajusta la ruta según tu estructura
+      const mockImageBuffer = fs.readFileSync(imagePath); // Leer la imagen como buffer
 
       // Use the mock image buffer in your test
       const newImages = {
@@ -84,9 +85,7 @@ describe('ApplyFiltersService', () => {
           },
         },
         {
-          arrayFilters: [
-            { 'image._id': imgId },
-            { 'filter._id': filterId }],
+          arrayFilters: [{ 'image._id': imgId }, { 'filter._id': filterId }],
         },
       );
     });
