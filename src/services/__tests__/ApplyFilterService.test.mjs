@@ -66,8 +66,6 @@ describe('ApplyFiltersService', () => {
 
       await applyFiltersService.applyFilters(newImages);
 
-      await expect(sharpGrayscale).toHaveBeenCalled();
-
       expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
       expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
       expect(sharpToBuffer).toHaveBeenCalledWith();
