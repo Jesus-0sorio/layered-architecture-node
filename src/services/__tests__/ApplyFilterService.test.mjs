@@ -67,7 +67,7 @@ describe('ApplyFiltersService', () => {
         .spyOn(sharp.prototype, 'grayscale')
         .mockReturnValue(sharp(mockImageBuffer));
       const sharpNegate = jest
-        .spyOn(sharp.prototype, 'negate')
+        .spyOn(sharp.prototype, 'negative')
         .mockReturnValue(sharp(mockImageBuffer));
       const sharpBlur = jest
         .spyOn(sharp.prototype, 'blur')
@@ -85,8 +85,8 @@ describe('ApplyFiltersService', () => {
       await applyFiltersService.applyFilters(newImages);
 
       expect(sharpGrayscale).toHaveBeenCalled();
-      expect(sharpNegate).toHaveBeenCalled();
-      expect(sharpBlur).toHaveBeenCalled();
+      expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
+      expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
       await expect(sharpToBuffer).toHaveBeenCalled();
       expect(minioService.saveImage).toHaveBeenCalledWith({
         originalname: 'image_grayscale.jpg',
