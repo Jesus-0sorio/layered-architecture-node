@@ -98,7 +98,7 @@ describe('ApplyFiltersService', () => {
       await expect(sharpToBuffer).toHaveBeenCalled();
       expect(minioService.saveImage).toHaveBeenCalledWith({
         originalname: 'image_grayscale.jpg',
-        buffer: expect.any(Buffer),
+        buffer: mockImageBuffer,
       });
       expect(processRepository.updateOne).toHaveBeenCalledWith(
         { _id: id, 'images._id': imgId, 'images.filters._id': filterId },
