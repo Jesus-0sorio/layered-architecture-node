@@ -29,9 +29,15 @@ describe('ApplyFiltersService', () => {
       const filterId = '789';
       const imgUrl = 'https://example.com/image.jpg';
       // Create a mock image buffer
-      const mockImageBuffer = Buffer.from(
-        [0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01],
-      );
+      const mockImageBuffer = Buffer.from([
+        137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0,
+        10, 0, 0, 0, 10, 8, 6, 0, 0, 0, 26, 88, 77, 0, 0, 0, 2, 98, 80, 78, 71,
+        1, 2, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      ]);
 
       // Use the mock image buffer in your test
       const newImages = {
