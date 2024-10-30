@@ -90,7 +90,7 @@ describe('ApplyFiltersService', () => {
         observer,
       });
 
-      await applyFiltersService.applyFilters(...newImages);
+      await applyFiltersService.applyFilters(newImages);
 
       expect(sharpGrayscale).toHaveBeenCalled();
       expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
