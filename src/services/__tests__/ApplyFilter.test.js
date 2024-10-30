@@ -36,11 +36,27 @@ describe('ApplyFilter', () => {
 
   describe('notify', () => {
     test('should call observer with correct parameters', () => {
-      applyFilter.subscribe({ imgId: 1, filterId: 2, observer });
-      applyFilter.notify({
-        id: 1, imgId: 1, filterId: 2, imgUrl: 'http://example.com/image.jpg',
+      const observerMock = { notify: jest.fn() };
+
+      applyFilter.subscribe({
+        imgId: 'img123',
+        filterId: 'filter456',
+        observer: observerMock,
       });
-      expect(applyFilter.subscribers[1][2]).toBe(observer);
+
+      applyFilter.notify({
+        id: 'processId',
+        imgId: 'img123',
+        filterId: 'filter456',
+        imgUrl: 'http://example.com/image.jpg',
+      });
+
+      expect(observerMock.notify).toHaveBeenCalledWith(
+        'processId',
+        'img123',
+        'filter456',
+        'http://example.com/image.jpg',
+      );
     });
 
     test('should not call observer if imgId is not found', () => {
