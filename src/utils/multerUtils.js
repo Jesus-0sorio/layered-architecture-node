@@ -2,7 +2,7 @@ import multer from 'multer';
 import Boom from '@hapi/boom';
 import { v4 } from 'uuid';
 
-const imagesType = ['image/png'];
+const imagesType = ['image/png', 'image/jpeg', 'image/jpg'];
 
 const upload = multer({
   storage: multer.memoryStorage(),
