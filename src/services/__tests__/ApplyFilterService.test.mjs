@@ -38,7 +38,7 @@ describe('ApplyFiltersService', () => {
       const imgId = '456';
       const filterId = '789';
 
-      const imagePath = path.join(__dirname, 'images', 'example.jpg');
+      const imagePath = path.join(__dirname, 'assets', 'img1.png');
       const mockImageBuffer = fs.readFileSync(imagePath);
 
       const newImages = {
