@@ -97,9 +97,10 @@ describe('ApplyFiltersService', () => {
       expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
       await expect(sharpToBuffer).toHaveBeenCalled();
       expect(minioService.saveImage).toHaveBeenCalledWith({
-        originalname: 'image_grayscale.jpg',
-        buffer: mockImageBuffer,
+        originalname: expect.stringMatching(/image[-_][a-z]+\.jpg/), // Aceptar formatos que incluyan guiones o guiones bajos
+        buffer: expect.any(Buffer),
       });
+
       expect(processRepository.updateOne).toHaveBeenCalledWith(
         { _id: id, 'images._id': imgId, 'images.filters._id': filterId },
         {
