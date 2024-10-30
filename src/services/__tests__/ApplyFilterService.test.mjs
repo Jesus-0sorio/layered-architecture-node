@@ -30,13 +30,57 @@ describe('ApplyFiltersService', () => {
       const imgUrl = 'https://example.com/image.jpg';
       // Create a mock image buffer
       const mockImageBuffer = Buffer.from([
-        137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0,
-        10, 0, 0, 0, 10, 8, 6, 0, 0, 0, 26, 88, 77, 0, 0, 0, 2, 98, 80, 78, 71,
-        1, 2, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        137,
+        80,
+        78,
+        71,
+        13,
+        10,
+        26,
+        10, // PNG signature
+        0,
+        0,
+        0,
+        13,
+        73,
+        72,
+        68,
+        82, // IHDR chunk
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1, // Width: 1, Height: 1
+        8,
+        6,
+        0,
+        0,
+        0,
+        89,
+        146,
+        90,
+        39, // Color type: RGBA, Compression: 0, Filter: 0, Interlace: 0
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0, // IDAT chunk (1 byte of data)
+        195,
+        20,
+        0,
+        0,
+        0,
+        0, // Compressed data (deflated)
+        0,
+        0,
+        0,
+        0, // IEND chunk
       ]);
 
       // Use the mock image buffer in your test
