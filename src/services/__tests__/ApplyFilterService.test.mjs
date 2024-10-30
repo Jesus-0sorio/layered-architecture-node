@@ -54,6 +54,14 @@ describe('ApplyFiltersService', () => {
                 id: filterId,
                 name: 'grayscale',
               },
+              {
+                id: '101',
+                name: 'negative',
+              },
+              {
+                id: '102',
+                name: 'blur',
+              },
             ],
           },
         ],
@@ -67,7 +75,7 @@ describe('ApplyFiltersService', () => {
         .spyOn(sharp.prototype, 'grayscale')
         .mockReturnValue(sharp(mockImageBuffer));
       const sharpNegate = jest
-        .spyOn(sharp.prototype, 'negative')
+        .spyOn(sharp.prototype, 'negate')
         .mockReturnValue(sharp(mockImageBuffer));
       const sharpBlur = jest
         .spyOn(sharp.prototype, 'blur')
