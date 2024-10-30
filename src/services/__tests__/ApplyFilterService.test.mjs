@@ -53,7 +53,9 @@ describe('ApplyFiltersService', () => {
 
       const applyImgFilter = new ApplyFilter();
       const observer = new Observer({ processRepository });
-      const sharpGrayscale = jest.spyOn(sharp.prototype, 'grayscale');
+      const sharpGrayscale = jest.mock('sharp').mockImplementation(() => ({
+        toBuffer: jest.fn().mockResolvedValue(mockImageBuffer),
+      }));
       const sharpNegate = jest.spyOn(sharp.prototype, 'negate');
       const sharpBlur = jest.spyOn(sharp.prototype, 'blur');
       const sharpToBuffer = jest.spyOn(sharp.prototype, 'toBuffer');
@@ -65,6 +67,8 @@ describe('ApplyFiltersService', () => {
       });
 
       await applyFiltersService.applyFilters(newImages);
+
+      await expect(sharpGrayscale).toHaveBeenCalled();
 
       expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
       expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
