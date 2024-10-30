@@ -40,7 +40,7 @@ describe('ApplyFiltersService', () => {
       const filterId = '789';
 
       const imagePath = path.join(__dirname, 'assets', 'img1.png');
-      const mockImageBuffer = fs.readFileSync(imagePath);
+      const mockImageBuffer = Buffer.from(fs.readFileSync(imagePath));
 
       const newImages = {
         id,
@@ -90,7 +90,7 @@ describe('ApplyFiltersService', () => {
         observer,
       });
 
-      await applyFiltersService.applyFilters(newImages);
+      await applyFiltersService.applyFilters(...newImages);
 
       expect(sharpGrayscale).toHaveBeenCalled();
       expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
