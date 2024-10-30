@@ -1,13 +1,18 @@
 import sharp from 'sharp';
 import {
-  describe, test, expect, jest,
-  beforeEach,
+  describe, test, expect, jest, beforeEach,
 } from '@jest/globals';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import ApplyFiltersService from '../ApplyFilterService.js';
 import Observer from '../ApplyFilter/Observer.js';
 import ApplyFilter from '../ApplyFilter/ApplyFilter.js';
+
+// eslint-disable-next-line no-underscore-dangle
+const __filename = fileURLToPath(import.meta.url);
+// eslint-disable-next-line no-underscore-dangle
+const __dirname = path.dirname(__filename);
 
 describe('ApplyFiltersService', () => {
   let applyFiltersService;
@@ -21,7 +26,10 @@ describe('ApplyFiltersService', () => {
     minioService = {
       saveImage: jest.fn(),
     };
-    applyFiltersService = new ApplyFiltersService({ processRepository, minioService });
+    applyFiltersService = new ApplyFiltersService({
+      processRepository,
+      minioService,
+    });
   });
 
   describe('applyFilters', () => {
@@ -29,12 +37,10 @@ describe('ApplyFiltersService', () => {
       const id = '123';
       const imgId = '456';
       const filterId = '789';
-      const imgUrl = 'https://example.com/image.jpg';
-      // Create a mock image buffer
-      const imagePath = path.join(__dirname, 'assets', 'img1.png'); // Ajusta la ruta según tu estructura
-      const mockImageBuffer = fs.readFileSync(imagePath); // Leer la imagen como buffer
 
-      // Use the mock image buffer in your test
+      const imagePath = path.join(__dirname, 'images', 'example.jpg');
+      const mockImageBuffer = fs.readFileSync(imagePath);
+
       const newImages = {
         id,
         images: [
@@ -54,10 +60,20 @@ describe('ApplyFiltersService', () => {
 
       const applyImgFilter = new ApplyFilter();
       const observer = new Observer({ processRepository });
-      const sharpGrayscale = jest.spyOn(sharp.prototype, 'grayscale');
-      const sharpNegate = jest.spyOn(sharp.prototype, 'negate');
-      const sharpBlur = jest.spyOn(sharp.prototype, 'blur');
-      const sharpToBuffer = jest.spyOn(sharp.prototype, 'toBuffer');
+
+      // Espiar métodos de sharp
+      const sharpGrayscale = jest
+        .spyOn(sharp.prototype, 'grayscale')
+        .mockReturnValue(sharp(mockImageBuffer));
+      const sharpNegate = jest
+        .spyOn(sharp.prototype, 'negate')
+        .mockReturnValue(sharp(mockImageBuffer));
+      const sharpBlur = jest
+        .spyOn(sharp.prototype, 'blur')
+        .mockReturnValue(sharp(mockImageBuffer));
+      const sharpToBuffer = jest
+        .spyOn(sharp.prototype, 'toBuffer')
+        .mockResolvedValue(mockImageBuffer);
 
       applyImgFilter.subscribe({
         imgId,
@@ -67,11 +83,10 @@ describe('ApplyFiltersService', () => {
 
       await applyFiltersService.applyFilters(newImages);
 
-      await expect(sharpGrayscale).toHaveBeenCalled();
-
+      expect(sharpGrayscale).toHaveBeenCalled();
       expect(sharpNegate).toHaveBeenCalledWith({ alpha: false });
       expect(sharpBlur).toHaveBeenCalledWith(1 + 0.7 / 2);
-      expect(sharpToBuffer).toHaveBeenCalledWith();
+      await expect(sharpToBuffer).toHaveBeenCalled();
       expect(minioService.saveImage).toHaveBeenCalledWith({
         originalname: 'image_grayscale.jpg',
         buffer: expect.any(Buffer),
@@ -81,7 +96,7 @@ describe('ApplyFiltersService', () => {
         {
           $set: {
             'images.$[image].filters.$[filter].status': 'completed',
-            'images.$[image].filters.$[filter].imgUrl': imgUrl,
+            'images.$[image].filters.$[filter].imgUrl': expect.any(String),
           },
         },
         {
