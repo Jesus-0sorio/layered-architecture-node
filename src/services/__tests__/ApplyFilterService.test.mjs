@@ -25,6 +25,7 @@ describe('ApplyFiltersService', () => {
     };
     minioService = {
       saveImage: jest.fn(),
+      generateSignedUrl: jest.fn(),
     };
     applyFiltersService = new ApplyFiltersService({
       processRepository,
