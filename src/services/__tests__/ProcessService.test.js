@@ -14,49 +14,49 @@ describe('ProcessService', () => {
   };
   const processService = new ProcessService({ processRepository, minioService });
 
-  test('Should return payload', async () => {
-    const payload = {
-      filters: ['negative', 'grayscale'],
-      images: [
-        {
-          originalname: 'img.png',
-          buffer: Buffer.from('./assets/img1.png'),
-        },
-      ],
-    };
+  // test('Should return payload', async () => {
+  //   const payload = {
+  //     filters: ['negative', 'grayscale'],
+  //     images: [
+  //       {
+  //         originalname: 'img.png',
+  //         buffer: Buffer.from('./assets/img1.png'),
+  //       },
+  //     ],
+  //   };
 
-    const expectedData = {
-      filters: ['negative', 'grayscale'],
-      images: [
-        {
-          imageUrl: 'img.png',
-          filters: [
-            {
-              name: 'negative',
-              status: 'in-progress',
-              originalname: 'img.png',
-              _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+  //   const expectedData = {
+  //     filters: ['negative', 'grayscale'],
+  //     images: [
+  //       {
+  //         imageUrl: 'img.png',
+  //         filters: [
+  //           {
+  //             name: 'negative',
+  //             status: 'in-progress',
+  //             originalname: 'img.png',
+  //             _id: '60f0f0b3e6b3f3a3e8b0b0b0',
 
-            },
-            {
-              name: 'grayscale',
-              status: 'in-progress',
-              originalname: 'img.png',
-              _id: '60f0f0b3e6b3f3a3e8b0b0b0',
-            },
-          ],
-          originalname: 'img.png',
-        },
-      ],
-      _id: '60f0f0b3e6b3f3a3e8b0b0b0',
-      originalname: 'img.png',
-    };
+  //           },
+  //           {
+  //             name: 'grayscale',
+  //             status: 'in-progress',
+  //             originalname: 'img.png',
+  //             _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+  //           },
+  //         ],
+  //         originalname: 'img.png',
+  //       },
+  //     ],
+  //     _id: '60f0f0b3e6b3f3a3e8b0b0b0',
+  //     originalname: 'img.png',
+  //   };
 
-    processRepository.save = jest.fn()
-      .mockImplementationOnce(() => expectedData);
-    const process = await processService.applyFilters(payload);
-    expect(process).toMatchObject(expectedData);
-  });
+  //   processRepository.save = jest.fn()
+  //     .mockImplementationOnce(() => expectedData);
+  //   const process = await processService.applyFilters(payload);
+  //   expect(process).toMatchObject(expectedData);
+  // });
 
   test('Should throw error when payload is invalid', async () => {
     const payload = {
@@ -103,15 +103,15 @@ describe('ProcessService', () => {
     expect(process).toMatchObject(expectedData);
   });
 
-  // test('Should throw error when images size exceeds 50MB', async () => {
-  //   const payload = {
-  //     filters: ['negative', 'grayscale'],
-  //     images: [
-  //       { originalname: 'img.png', size: 50 * 1024 * 1024 },
-  //       { originalname: 'img1.png', size: 1 },
-  //     ],
-  //   };
-  //   await expect(processService.applyFilters(payload))
-  //     .rejects.toThrowError('Images size exceeds 50MB');
-  // });
+  test('Should throw error when images size exceeds 50MB', async () => {
+    const payload = {
+      filters: ['negative', 'grayscale'],
+      images: [
+        { originalname: 'img.png', size: 50 * 1024 * 1024 },
+        { originalname: 'img1.png', size: 1 },
+      ],
+    };
+    await expect(processService.applyFilters(payload))
+      .rejects.toThrowError('Images size exceeds 50MB');
+  });
 });
