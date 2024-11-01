@@ -15,6 +15,7 @@ describe('ProcessService', () => {
   const processRepository = {
     save: jest.fn(),
     getById: jest.fn(),
+    updateOne: jest.fn(),
   };
   const minioService = {
     saveImage: jest.fn(),
