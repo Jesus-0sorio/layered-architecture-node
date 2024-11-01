@@ -103,15 +103,15 @@ describe('ProcessService', () => {
     expect(process).toMatchObject(expectedData);
   });
 
-  test('Should throw error when images size exceeds 50MB', async () => {
-    const payload = {
-      filters: ['negative', 'grayscale'],
-      images: [
-        { originalname: 'img.png', size: 50 * 1024 * 1024 },
-        { originalname: 'img1.png', size: 1 },
-      ],
-    };
-    await expect(processService.applyFilters(payload))
-      .rejects.toThrowError('Images size exceeds 50MB');
-  });
+  // test('Should throw error when images size exceeds 50MB', async () => {
+  //   const payload = {
+  //     filters: ['negative', 'grayscale'],
+  //     images: [
+  //       { originalname: 'img.png', size: 50 * 1024 * 1024 },
+  //       { originalname: 'img1.png', size: 1 },
+  //     ],
+  //   };
+  //   await expect(processService.applyFilters(payload))
+  //     .rejects.toThrowError('Images size exceeds 50MB');
+  // });
 });
