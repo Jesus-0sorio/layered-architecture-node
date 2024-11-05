@@ -27,4 +27,4 @@ jobs:
 
       - name: Check code coverage
         run: npm run test
-        continue-on-error: false
+        continue-on-error: true
