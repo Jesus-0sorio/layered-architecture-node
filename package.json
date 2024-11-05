@@ -11,13 +11,22 @@
     "lint": "eslint . --ext .js --fix",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.js --coverage",
     "test:integration": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.integration.config.js",
-    "coverage": "nyc --reporter=cobertura npm test"
+    "coverage": "nyc --reporter=cobertura --cwd . npm test"
   },
   "nyc": {
-    "reporter": ["text", "cobertura"],
+    "reporter": [
+      "text",
+      "cobertura"
+    ],
+    "report-dir": "coverage",
     "all": true,
-    "include": ["src/**/*.js"],
-    "exclude": ["test/**/*.js", "node_modules"]
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "src/**/__tests__/**",
+      "node_modules"
+    ]
   },
   "keywords": [],
   "author": "",
