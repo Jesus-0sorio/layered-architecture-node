@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .js --fix",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.config.js --coverage",
     "test:integration": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --config=jest.integration.config.js",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc --reporter=cobertura --cwd . npm test"
   },
   "nyc": {
     "reporter": [
