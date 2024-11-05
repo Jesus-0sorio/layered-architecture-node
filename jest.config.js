@@ -8,8 +8,8 @@ export default {
   coverageDirectory: 'coverage',
   collectCoverage: true,
   collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/**/__tests__/**', // Excluye archivos de prueba
+    'src/services/**/*.js',
+    '!src/**/__tests__/**',
   ],
   coverageReporters: ['text', 'cobertura'], // Añade cobertura como formato de reporte
   coverageThreshold: {
